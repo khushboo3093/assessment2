@@ -8,15 +8,15 @@ const Profile = () => {
   const { user, setUser } = useContext(UserContext);
 
   const [inputs, setInputs] = useState({
-    email: user.email,
-    firstname: "",
-    lastname: "",
-    address: "",
-    city: "",
-    country: "",
-    zipcode: "",
-    desc: "",
-    username: "",
+    email: user.email || "",
+    firstname: user.firstname || "",
+    lastname: user.lastname || "",
+    address: user.address || "",
+    city: user.city || "",
+    country: user.country || "",
+    zipcode: user.zipcode || "",
+    desc: user.desc || "",
+    username: user.username || "",
   });
 
   const [errors, setErrors] = useState({});
@@ -32,7 +32,16 @@ const Profile = () => {
       setLoading(true);
       setUser(inputs);
       setLoading(false);
-    } else setLoading(false);
+    } else {
+      for (let key in inputs) {
+        const errorElem = document.getElementById(`${key}-error`);
+        if (errorElem) {
+          errorElem.scrollIntoView({ behavior: "smooth" });
+          setLoading(false);
+          break;
+        }
+      }
+    }
   };
 
   const validateInput = async (target) => {
@@ -80,6 +89,7 @@ const Profile = () => {
                   : 12
               }`}
               key={key}
+              id={errors[input.name] ? `${input.name}-error` : key}
             >
               <label
                 htmlFor={input.id}
@@ -117,7 +127,7 @@ const Profile = () => {
             style={{ display: "flex", justifyContent: "flex-end" }}
           >
             <button type="submit" className="btn btn-primary">
-              Update Profile
+              Updat{loading ? "ing" : "e"} Profile
             </button>
           </div>
         </form>

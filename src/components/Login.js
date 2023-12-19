@@ -6,6 +6,8 @@ import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { validate } from "./validation";
 import { googleClientId, loginFormFixer } from "../utils/fixer";
 import { jwtDecode } from "jwt-decode";
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+// import { fbIcon } from "../assets/images";
 
 const Login = () => {
   const { setUser } = useContext(UserContext);
@@ -53,7 +55,11 @@ const Login = () => {
       <GoogleLogin
         onSuccess={(credentialResponse) => {
           const decoded = jwtDecode(credentialResponse.credential);
-          setUser(decoded);
+          setUser({
+            ...decoded,
+            firstname: decoded.given_name,
+            lastname: decoded.family_name,
+          });
           navigate("/profile");
         }}
         onError={() => {
@@ -81,10 +87,19 @@ const Login = () => {
             <span className="social-button">
               <SocialLogin />
             </span>
-            {/* <span className="social-button">
-              <img src={facebookIcon} alt="" />
-            </span> */}
 
+            {/* <FacebookLogin
+              appId="1405014783700081"
+              autoLoad={true}
+              // fields="name,email,picture"
+              // onClick={componentClicked}
+              render={(renderProps) => (
+                <span onClick={renderProps.onClick} className="social-button">
+                  <img src={fbIcon} alt="fb-login" />
+                </span>
+              )}
+              callback={(r) => console.log(r)}
+            /> */}
             <span className="or">or</span>
           </div>
         </div>
