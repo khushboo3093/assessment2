@@ -1,86 +1,40 @@
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { routes } from "./routes";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/css/custom.css";
 import { useEffect, useState } from "react";
-import "./App.css";
-import axios from "axios";
+import { UserContext } from "./context";
 
-export default function App() {
-  const [result, setResult] = useState([]);
-  const [limit, setLimit] = useState(10);
-  const [loading, setLoading] = useState(false);
-  const [offset, setOffset] = useState(0);
-
-  const getData = async () => {
-    try {
-      setLoading(true);
-      const res = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/?offset=${offset}&limit=${limit}`
-      );
-      setLoading(false);
-      setResult(res.data);
-    } catch (err) {
-      setLoading(false);
-      console.log(err);
-    }
-  };
-
-  const prev = () => {
-    if (result.previous) setOffset((p) => p - 1);
-  };
-  const next = () => {
-    if (result.next) setOffset((p) => p + 1);
-  };
+const App = () => {
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user") || "{}")
+  );
 
   useEffect(() => {
-    getData();
-  }, [limit, offset]); // eslint-disable-line
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
 
   return (
-    <div className="App">
-      <ul>
-        {result?.results?.map((item, index) => (
-          <li key={index}>{item.name}</li>
-        ))}
-      </ul>
-      <div
-        style={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "space-between",
-        }}
-      >
-        <select
-          value={limit}
-          onChange={({ target }) => setLimit(target.value)}
-          disabled={loading}
-        >
-          <option>10</option>
-          <option>20</option>
-          <option>40</option>
-          <option>50</option>
-        </select>
-
-        <div>
-          <button
-            type="button"
-            onClick={prev}
-            disabled={!result.previous || loading}
-          >
-            prev
-          </button>
-
-          <button
-            type="button"
-            onClick={next}
-            disabled={!result.next || loading}
-          >
-            next
-          </button>
-        </div>
-      </div>
-      {loading && (
-        <div className="loader">
-          <i className="fa fa-spinner fa-spin" style={{ color: "#fff" }} />
-        </div>
-      )}
-    </div>
+    <BrowserRouter>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Routes>
+          {routes.map(({ element, path }, key) => (
+            <Route
+              element={
+                path === "/profile" && !user.email ? (
+                  <Navigate to="/" />
+                ) : (
+                  element
+                )
+              }
+              path={path}
+              key={key}
+            />
+          ))}
+        </Routes>
+      </UserContext.Provider>
+    </BrowserRouter>
   );
-}
+};
+
+export default App;

@@ -1,0 +1,103 @@
+.main-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-wrapper .profile {
+  max-width: 90vw;
+}
+.main-wrapper .profile .heading {
+  padding: 10px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.main-wrapper .head {
+  display: inline-flex;
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 2px solid;
+}
+.main-wrapper .login-component {
+  width: 280px;
+  padding: 20px;
+}
+.main-wrapper .login-component .social-login {
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.main-wrapper .login-component .social-login .heading {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 10px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.main-wrapper .login-component .social-login .platforms {
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+.main-wrapper .login-component .social-login .platforms .social-button {
+  cursor: pointer;
+}
+.main-wrapper .login-component .social-login .platforms img {
+  width: 32px;
+}
+.main-wrapper .login-component .social-login .or {
+  position: absolute;
+  bottom: -30px;
+  background: #fff;
+  width: 30%;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.5);
+}
+.main-wrapper .login-component .login {
+  padding-top: 20px;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+.form-control.invalid {
+  border-color: #ff0000 !important;
+}
+
+.input-error {
+  font-size: 14px;
+  color: #ff0000;
+  bottom: -20px;
+}
+
+label {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.5);
+  text-transform: uppercase;
+}
+
+input {
+  color: rgba(0, 0, 0, 0.5) !important;
+  font-size: 14px !important;
+}
+
+::-moz-placeholder {
+  font-size: 12px !important;
+  color: rgba(0, 0, 0, 0.3) !important;
+}
+
+::placeholder {
+  font-size: 12px !important;
+  color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.logout {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  cursor: pointer;
+}
+.logout img {
+  width: 100%;
+}/*# sourceMappingURL=custom.css.map */
